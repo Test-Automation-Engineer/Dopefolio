@@ -1,5 +1,5 @@
 # Use the official Node.js image as the base image
-FROM node:14
+FROM node:14 as build
 
 # Set the working directory
 WORKDIR /app
@@ -8,16 +8,19 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install --include=dev
+RUN npm install
 
 # Copy the rest of the application code
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN npm run compress:css
 
-# Expose the port the app runs on
-EXPOSE 3000
+# stage 4 - build the final image and copy the react build files
+FROM nginxinc/nginx-unprivileged:1.27-alpine as release
 
-# Start the application
-CMD ["npm", "start"]
+COPY --chown=1000:1000 --from=build /app /usr/share/nginx/html
+
+USER 1000
+
+EXPOSE 8080
