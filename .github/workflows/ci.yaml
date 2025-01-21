@@ -28,4 +28,4 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/test-automation-engineer/portfolio:1.0.1
+            ghcr.io/test-automation-engineer/portfolio:1.0.2
