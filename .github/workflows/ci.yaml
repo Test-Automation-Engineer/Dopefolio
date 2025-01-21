@@ -7,7 +7,7 @@ on:
       - 'feature/**'
 
 jobs:
-  docker:
+  build-and-push-image:
     runs-on: ubuntu-latest
     steps:
       - name: Login to GitHub Container Registry
@@ -28,4 +28,4 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/test-automation-engineer/portfolio:1.0.0
+            ghcr.io/test-automation-engineer/portfolio:1.0.1
